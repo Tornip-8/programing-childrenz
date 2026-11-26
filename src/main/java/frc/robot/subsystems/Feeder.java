@@ -23,7 +23,7 @@ public class Feeder extends SubsystemBase {
     public void set_Velocity(double vel){
         feederMotor.setControl(v_request.withVelocity(vel/60));
     }
-    public void stop_intake(){
+    public void stop_feeder(){
         feederMotor.setVoltage(0);
     }
 }

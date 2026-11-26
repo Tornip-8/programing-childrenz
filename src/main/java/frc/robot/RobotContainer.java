@@ -23,6 +23,7 @@ public class RobotContainer {
     private final Spindexer spin = new Spindexer();
     private final IntakePivot piv = new IntakePivot();
     private final Feeder feed = new Feeder();
+    private final Flywheels fly = new Flywheels();
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(1).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
@@ -44,11 +45,15 @@ public class RobotContainer {
 
     private void configureBindings() {
         ;
-        driverController.y().whileTrue(new InstantCommand(() -> inta.set_Velocity(4500)));
-        driverController.x().whileTrue(new InstantCommand(() -> inta.stop_intake()));
-        driverController.b().whileTrue(new InstantCommand(() -> spin.set_Velocity(4500)));
+        driverController.leftBumper().whileTrue(new InstantCommand(() -> inta.set_Velocity(4500)));
+        driverController.rightBumper().whileTrue(new InstantCommand(() -> inta.stop_intake()));
         driverController.a().whileTrue(new InstantCommand(() -> spin.stop_spin()));
+        driverController.a().whileTrue(new InstantCommand(() -> feed.stop_feeder()));
+        driverController.a().whileTrue(new InstantCommand(() -> fly.stop_fly()));
+        driverController.b().whileTrue(new InstantCommand(() -> spin.set_Velocity(4500)));
         driverController.b().whileTrue(new InstantCommand(() -> feed.set_Velocity(4500)));
+        driverController.b().whileTrue(new InstantCommand(() -> fly.set_VelocityL(4500)));
+        driverController.b().whileTrue(new InstantCommand(() -> fly.set_VelocityR(4500)));
         driverController.leftTrigger().whileTrue(new InstantCommand(() -> piv.set_Position(15.5)));
         driverController.rightTrigger().whileTrue(new InstantCommand(() -> piv.set_Position(0)));
         
